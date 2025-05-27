@@ -1,9 +1,6 @@
-
 import React from 'react';
 import { FolderIcon, CalculatorIcon, CogIcon, BookmarkIcon } from '../constants';
 import { HeaderProps } from '../types'; 
-
-// CHRONOS_LOGO_BASE64 constant removed
 
 const Header: React.FC<HeaderProps> = ({
   onOpenProjectsManager,
@@ -43,26 +40,16 @@ const Header: React.FC<HeaderProps> = ({
 
   const otherManagerOpen = isProjectsManagerOpen || isAbacusCodesManagerOpen || isFavoritesManagerOpen;
 
-  return (
+return (
     <header 
       className={`p-3 sm:p-4 bg-[var(--bg-card)] border-b border-[var(--border-color)] shadow-lg`}
     >
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0">
         <img
-          src="/assets/logoss.svg"
+          src="assets/logoss.svg" // REMOVED the leading slash here
           alt="Chronos Application Logo"
-          className="h-10 object-contain" // 40px height, maintain aspect ratio
+          className="h-10 object-contain"
         />
-        
-        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
-          <div className="flex items-center space-x-1 p-0.5 rounded-md bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm">
-            <ManagementViewButton 
-              isActive={isProjectsManagerOpen}
-              onClick={onOpenProjectsManager} 
-              icon={<FolderIcon className="w-4 h-4"/>}
-              label="Projects"
-              disabled={otherManagerOpen && !isProjectsManagerOpen}
-            />
             <ManagementViewButton
               isActive={isAbacusCodesManagerOpen}
               onClick={onOpenAbacusCodesManager}
