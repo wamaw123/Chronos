@@ -1,0 +1,6 @@
+{
+  "name": "Task Timer & Timesheet",
+  "description": "A web application to manage tasks, track time spent on them, and view weekly timesheets. Users can add, edit, and delete tasks, start and stop timers for tasks, and see a summary of their work on a weekly basis.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

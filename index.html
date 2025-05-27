@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="en" class="theme-glass tone-purple">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Timer & Timesheet - Project Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        /* Base variables - Default to glass or a neutral state */
+        --bg-main: linear-gradient(to bottom right, #1f2937, #4a044e, #1e3a8a);
+        --bg-card: rgba(10, 5, 15, 0.2);
+        --bg-modal: rgba(20, 10, 30, 0.3);
+        --bg-dropdown: rgba(25, 15, 40, 0.85);
+        --bg-input: rgba(255, 255, 255, 0.05);
+        --bg-input-disabled: rgba(255, 255, 255, 0.02); 
+        --bg-button: rgba(255, 255, 255, 0.1);
+        --bg-button-hover: rgba(255, 255, 255, 0.2);
+        
+        --text-main: #e5e7eb; /* gray-200 */
+        --text-secondary: #9ca3af; /* gray-400 */
+        --text-on-accent: #ffffff;
+        --text-placeholder: #6b7280; /* gray-500 */
+
+        --border-color: rgba(255, 255, 255, 0.1);
+        
+        /* Tone Colors Definitions */
+        /* Purple (Default) Tone */
+        --tone-purple-text-accent: #c084fc; /* purple-400 */
+        --tone-purple-border-input-focus: #a855f7; /* purple-500 */
+        --tone-purple-accent-primary: #9333ea; /* purple-600 */
+        --tone-purple-accent-primary-hover: #7e22ce; /* purple-700 */
+        --tone-purple-accent-secondary: #a855f7; /* purple-500 */
+
+        /* Blue Tone */
+        --tone-blue-text-accent: #60a5fa; /* blue-400 */
+        --tone-blue-border-input-focus: #3b82f6; /* blue-500 */
+        --tone-blue-accent-primary: #2563eb; /* blue-600 */
+        --tone-blue-accent-primary-hover: #1d4ed8; /* blue-700 */
+        --tone-blue-accent-secondary: #3b82f6; /* blue-500 */
+
+        /* Teal Tone */
+        --tone-teal-text-accent: #2dd4bf; /* teal-400 */
+        --tone-teal-border-input-focus: #14b8a6; /* teal-500 */
+        --tone-teal-accent-primary: #0d9488; /* teal-600 */
+        --tone-teal-accent-primary-hover: #0f766e; /* teal-700 */
+        --tone-teal-accent-secondary: #14b8a6; /* teal-500 */
+        
+        /* Pink Tone */
+        --tone-pink-text-accent: #f472b6; /* pink-400 */
+        --tone-pink-border-input-focus: #ec4899; /* pink-500 */
+        --tone-pink-accent-primary: #db2777; /* pink-600 */
+        --tone-pink-accent-primary-hover: #be185d; /* pink-700 */
+        --tone-pink-accent-secondary: #ec4899; /* pink-500 */
+
+        /* General accent variables - these will be overridden by html.tone-* classes */
+        --text-accent: var(--tone-purple-text-accent);
+        --border-input-focus: var(--tone-purple-border-input-focus);
+        --accent-primary: var(--tone-purple-accent-primary);
+        --accent-primary-hover: var(--tone-purple-accent-primary-hover);
+        --accent-secondary: var(--tone-purple-accent-secondary);
+        
+        /* Important Task color - remains distinct */
+        --accent-important: #facc15; /* yellow-400 */
+
+        /* Start/Stop button colors - remain distinct */
+        --button-start-bg: #14b8a6; 
+        --button-start-hover-bg: #0d9488; 
+        --button-start-border: #5eead4; 
+        --button-stop-bg: #ec4899; 
+        --button-stop-hover-bg: #db2777; 
+        --button-stop-border: #f9a8d4; 
+        
+        --backdrop-blur-intensity: '8px';
+        --shadow-color-soft: rgba(0,0,0,0.1);
+        --shadow-color-medium: rgba(0,0,0,0.2);
+
+        --scrollbar-thumb: #581c87; 
+        --scrollbar-thumb-hover: #4a044e; 
+        --scrollbar-track: #1e1b4b; 
+
+        --neutral-project-color: #4b5563; 
+      }
+
+      html.tone-purple {
+        --text-accent: var(--tone-purple-text-accent);
+        --border-input-focus: var(--tone-purple-border-input-focus);
+        --accent-primary: var(--tone-purple-accent-primary);
+        --accent-primary-hover: var(--tone-purple-accent-primary-hover);
+        --accent-secondary: var(--tone-purple-accent-secondary);
+      }
+      html.tone-blue {
+        --text-accent: var(--tone-blue-text-accent);
+        --border-input-focus: var(--tone-blue-border-input-focus);
+        --accent-primary: var(--tone-blue-accent-primary);
+        --accent-primary-hover: var(--tone-blue-accent-primary-hover);
+        --accent-secondary: var(--tone-blue-accent-secondary);
+      }
+      html.tone-teal {
+        --text-accent: var(--tone-teal-text-accent);
+        --border-input-focus: var(--tone-teal-border-input-focus);
+        --accent-primary: var(--tone-teal-accent-primary);
+        --accent-primary-hover: var(--tone-teal-accent-primary-hover);
+        --accent-secondary: var(--tone-teal-accent-secondary);
+      }
+      html.tone-pink {
+        --text-accent: var(--tone-pink-text-accent);
+        --border-input-focus: var(--tone-pink-border-input-focus);
+        --accent-primary: var(--tone-pink-accent-primary);
+        --accent-primary-hover: var(--tone-pink-accent-primary-hover);
+        --accent-secondary: var(--tone-pink-accent-secondary);
+      }
+
+
+      .theme-glass {
+        --bg-main: linear-gradient(to bottom right, #1f2937, #4a044e, #1e3a8a);
+        --bg-card: rgba(10, 5, 15, 0.65); 
+        --bg-modal: rgba(20, 10, 30, 0.55); 
+        --bg-dropdown: rgba(25, 15, 40, 0.85); 
+        --bg-input: rgba(255, 255, 255, 0.1); 
+        --bg-input-disabled: rgba(255, 255, 255, 0.05); 
+        --bg-button: rgba(255, 255, 255, 0.15); 
+        --bg-button-hover: rgba(255, 255, 255, 0.25); 
+
+        --text-main: #e5e7eb; 
+        --text-secondary: #cbd5e1; 
+        /* --text-accent: #c084fc; Removed - controlled by tone */
+        --text-on-accent: #ffffff;
+        --text-placeholder: #94a3b8; 
+
+        --border-color: rgba(255, 255, 255, 0.15); 
+        /* --border-input-focus: #a855f7; Removed - controlled by tone */
+        
+        /* --accent-primary: #9333ea; Removed - controlled by tone */
+        /* --accent-primary-hover: #7e22ce; Removed - controlled by tone */
+        /* --accent-secondary: #a855f7; Removed - controlled by tone */
+        --accent-important: #facc15; /* yellow-400 */
+
+        --button-start-bg: #14b8a6; 
+        --button-start-hover-bg: #0d9488; 
+        --button-start-border: #5eead4; 
+        --button-stop-bg: #ec4899; 
+        --button-stop-hover-bg: #db2777; 
+        --button-stop-border: #f9a8d4; 
+        
+        --backdrop-blur-intensity: '8px';
+        --shadow-color-soft: rgba(0,0,0,0.2); 
+        --shadow-color-medium: rgba(0,0,0,0.3);
+
+        --scrollbar-thumb: #6d28d9; 
+        --scrollbar-thumb-hover: #5b21b6; 
+        --scrollbar-track: rgba(30,27,75,0.5); 
+        --neutral-project-color: #64748b; 
+      }
+      html.theme-glass body { background-image: var(--bg-main); background-color: #1f2937; }
+      .theme-glass .glass-effect {
+        backdrop-filter: blur(var(--backdrop-blur-intensity));
+        -webkit-backdrop-filter: blur(var(--backdrop-blur-intensity));
+      }
+
+      .theme-dark {
+        --bg-main: #0f172a; 
+        --bg-card: #1e293b; 
+        --bg-modal: #334155; 
+        --bg-dropdown: #334155; 
+        --bg-input: #334155; 
+        --bg-input-disabled: #293140; 
+        --bg-button: #334155; 
+        --bg-button-hover: #475569; 
+
+        --text-main: #e2e8f0; 
+        --text-secondary: #94a3b8; 
+        /* --text-accent: #a78bfa; Removed - controlled by tone */
+        --text-on-accent: #ffffff;
+        --text-placeholder: #64748b; 
+
+        --border-color: #334155; 
+        /* --border-input-focus: #8b5cf6; Removed - controlled by tone */
+        
+        /* --accent-primary: #8b5cf6; Removed - controlled by tone */
+        /* --accent-primary-hover: #7c3aed; Removed - controlled by tone */
+        /* --accent-secondary: #a78bfa; Removed - controlled by tone */
+        --accent-important: #facc15; /* yellow-400 */
+
+        --button-start-bg: #059669; 
+        --button-start-hover-bg: #047857; 
+        --button-start-border: #34d399; 
+        --button-stop-bg: #e11d48; 
+        --button-stop-hover-bg: #be123c; 
+        --button-stop-border: #fb7185; 
+        
+        --backdrop-blur-intensity: '0px'; 
+        --shadow-color-soft: rgba(0,0,0,0.1);
+        --shadow-color-medium: rgba(0,0,0,0.15);
+
+        --scrollbar-thumb: #475569; 
+        --scrollbar-thumb-hover: #334155; 
+        --scrollbar-track: #0f172a; 
+        --neutral-project-color: #475569; 
+      }
+      html.theme-dark body { background-color: var(--bg-main); background-image: none; }
+      .theme-dark .glass-effect { backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+
+      .theme-light {
+        --bg-main: #f1f5f9; 
+        --bg-card: #ffffff; 
+        --bg-modal: #f8fafc; 
+        --bg-dropdown: #f8fafc; 
+        --bg-input: #e2e8f0; 
+        --bg-input-disabled: #f1f5f9; 
+        --bg-button: #e2e8f0; 
+        --bg-button-hover: #cbd5e1; 
+
+        --text-main: #1e293b; 
+        --text-secondary: #475569; 
+        /* --text-accent: #7c3aed; Removed - controlled by tone */
+        --text-on-accent: #ffffff; /* For light theme, buttons with accent bg need dark text or this changes */
+        --text-placeholder: #94a3b8; 
+
+        --border-color: #e2e8f0; 
+        /* --border-input-focus: #8b5cf6; Removed - controlled by tone */
+
+        /* --accent-primary: #8b5cf6; Removed - controlled by tone */
+        /* --accent-primary-hover: #7c3aed; Removed - controlled by tone */
+        /* --accent-secondary: #a78bfa; Removed - controlled by tone */
+        --accent-important: #f59e0b; /* amber-500 for better contrast on light */
+
+        --button-start-bg: #10b981; 
+        --button-start-hover-bg: #059669; 
+        --button-start-border: #6ee7b7; 
+        --button-stop-bg: #f43f5e; 
+        --button-stop-hover-bg: #e11d48; 
+        --button-stop-border: #fda4af; 
+        
+        --backdrop-blur-intensity: '0px'; 
+        --shadow-color-soft: rgba(0,0,0,0.05);
+        --shadow-color-medium: rgba(0,0,0,0.1);
+
+        --scrollbar-thumb: #cbd5e1; 
+        --scrollbar-thumb-hover: #94a3b8; 
+        --scrollbar-track: #f1f5f9; 
+        --neutral-project-color: #94a3b8; 
+      }
+      html.theme-light.tone-purple   { --text-on-accent: #ffffff; }
+      html.theme-light.tone-blue     { --text-on-accent: #ffffff; }
+      html.theme-light.tone-teal     { --text-on-accent: #0f172a; } /* Dark text for teal on light theme */
+      html.theme-light.tone-pink     { --text-on-accent: #ffffff; }
+
+
+      html.theme-light body { background-color: var(--bg-main); background-image: none; }
+      .theme-light .glass-effect { backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+      body {
+        color: var(--text-main);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      /* Custom scrollbar for webkit browsers */
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .scrollbar-thumb-themed::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb);
+        border-radius: 4px;
+      }
+      .scrollbar-thumb-themed:hover::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb-hover);
+      }
+      .scrollbar-track-themed::-webkit-scrollbar-track {
+        background-color: var(--scrollbar-track);
+      }
+      /* Apply themed scrollbar to elements that need it */
+      .themed-scrollbar {
+        scrollbar-width: thin; /* For Firefox */
+        scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); /* For Firefox */
+      }
+      .themed-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+      .themed-scrollbar::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb); border-radius: 4px; }
+      .themed-scrollbar::-webkit-scrollbar-thumb:hover { background-color: var(--scrollbar-thumb-hover); }
+      .themed-scrollbar::-webkit-scrollbar-track { background-color: var(--scrollbar-track); }
+
+      /* Focus ring style for accessibility */
+      *:focus-visible {
+        outline: 2px solid var(--accent-secondary);
+        outline-offset: 2px;
+      }
+      input:focus, textarea:focus, select:focus {
+         border-color: var(--border-input-focus) !important;
+         box-shadow: 0 0 0 1px var(--border-input-focus) !important;
+      }
+      
+      /* Drag and Drop Styles */
+      .is-dragging {
+        /* Tailwind 'opacity-50' is applied via JS for the drag image, 
+           but this class can be used for other persistent styles if needed */
+      }
+      .is-drop-hover {
+        outline: 2px dashed var(--accent-secondary);
+        outline-offset: -2px; /* Inset outline slightly */
+        background-color: rgba(168, 85, 247, 0.1); /* Semi-transparent accent color - this will use the current tone's accent-secondary */
+      }
+
+      /* Animation for task deletion */
+      @keyframes fadeOutAndShrink {
+        from {
+          opacity: 1;
+          transform: scaleY(1);
+          max-height: 200px; /* Adjust if tasks can be taller */
+          padding-top: 1rem; /* Corresponds to p-4 */
+          padding-bottom: 1rem; /* Corresponds to p-4 */
+          /* margin-bottom is handled by space-y on parent */
+        }
+        to {
+          opacity: 0;
+          transform: scaleY(0);
+          max-height: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+          margin-bottom: 0; /* Ensure margin also collapses if item had one, though space-y handles this for lists */
+          border-width: 0; /* Collapse border */
+          visibility: hidden; /* Ensures it doesn't interfere after animation */
+        }
+      }
+
+      .animate-task-delete {
+        animation: fadeOutAndShrink 0.4s ease-in-out forwards;
+        transform-origin: top; /* Important for scaleY animation */
+        overflow: hidden; /* Important for max-height animation */
+      }
+
+      /* DayCard hover effects for Weekly View */
+      .day-card-interactive-wrapper.cursor-pointer:hover:not(:has(.day-card-task-summary.cursor-pointer:hover)) {
+        border-color: var(--accent-secondary);
+      }
+      .day-card-task-summary.cursor-pointer:hover {
+        background-color: var(--bg-button-hover);
+        transform: scale(1.02);
+        box-shadow: 0 2px 4px var(--shadow-color-soft);
+        z-index: 10; /* Ensure it's above other items if they overlap slightly during scale */
+      }
+
+      /* Print specific styles */
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        .printable-report, .printable-report * {
+          visibility: visible;
+        }
+        .printable-report {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+        }
+        /* Hide app-specific UI elements from the main page if user prints it directly */
+        header, .sticky, footer, .fixed, #root > div > div:first-child, #root > div > footer {
+            display: none !important;
+        }
+        main {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        /* Further styles for the report window itself will be injected via JS */
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react-dom/server": "https://esm.sh/react-dom@^19.1.0/server"
+  }
+}
+</script>
+</head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
+<link rel="stylesheet" href="index.css">
+<script src="index.tsx" type="module"></script>
