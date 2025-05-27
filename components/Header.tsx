@@ -1,6 +1,7 @@
 import React from 'react';
 import { FolderIcon, CalculatorIcon, CogIcon, BookmarkIcon } from '../constants';
 import { HeaderProps } from '../types';
+import logo from '../assets/logoss.svg';
 
 const Header: React.FC<HeaderProps> = ({
   onOpenProjectsManager,
@@ -46,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({
     >
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0">
         <img
-          src="assets/logoss.svg"
+          src={logo}
           alt="Chronos Application Logo"
           className="h-10 object-contain"
         />
@@ -80,17 +81,4 @@ const Header: React.FC<HeaderProps> = ({
             onClick={onOpenSettingsModal}
             className={`p-2 rounded-md transition-colors border border-[var(--border-color)] flex items-center space-x-2
                        bg-[var(--bg-button)] hover:bg-[var(--bg-button-hover)] text-[var(--text-secondary)] hover:text-[var(--text-main)]
-                       ${otherManagerOpen ? 'opacity-50 cursor-not-allowed' : ''}`}
-            title="Open Settings"
-            disabled={otherManagerOpen}
-          >
-            <CogIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="hidden sm:inline text-xs">Settings</span>
-          </button>
-        </div>
-      </div>
-    </header>
-  );
-};
-
-export default Header;
+                       ${otherManagerOpen ? 'opacity-50 cursor
