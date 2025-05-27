@@ -81,4 +81,17 @@ const Header: React.FC<HeaderProps> = ({
             onClick={onOpenSettingsModal}
             className={`p-2 rounded-md transition-colors border border-[var(--border-color)] flex items-center space-x-2
                        bg-[var(--bg-button)] hover:bg-[var(--bg-button-hover)] text-[var(--text-secondary)] hover:text-[var(--text-main)]
-                       ${otherManagerOpen ? 'opacity-50 cursor
+                       ${otherManagerOpen ? 'opacity-50 cursor-not-allowed' : ''}`}
+            title="Open Settings"
+            disabled={otherManagerOpen}
+          >
+            <CogIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline text-xs">Settings</span>
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
